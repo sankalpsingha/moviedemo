@@ -3,17 +3,35 @@ import { ScrollView, Text, View, RefreshControl, Image } from 'react-native';
 import Swiper from 'react-native-swiper';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
-import ScrollableTabView, { DefaultTabBar } from 'react-native-scrollable-tab-view';
-// import DefaultTabBar from './Tabs/DefaultTabBar';
+import ScrollableTabView from 'react-native-scrollable-tab-view';
+import DefaultTabBar from './Tabs/DefaultTabBar';
 import Info from './Tabs/Info';
+import Cast from './Tabs/Cast';
+import Trailers from './Tabs/Trailers';
 
 class Movie extends Component {
-  
+
+  constructor(props) {
+		super(props);
+
+		this.state = {
+			castsTabHeight: null,
+			heightAnim: null,
+			infoTabHeight: null,
+			trailersTabHeight: null,
+			tab: 0,
+		};
+}
+_getTabHeight(tabName, height) {
+  if (tabName === 'casts') this.setState({ castsTabHeight: height });
+  if (tabName === 'trailers') this.setState({ trailersTabHeight: height });
+}
+
   render() {
     return (
-
-      <ScrollView
+    <ScrollView
       style={{ backgroundColor: 'black' }}
+      contentContainerStyle={{ flex: 1 }}
       refreshControl={
         <RefreshControl
           refreshing={false}
@@ -26,101 +44,86 @@ class Movie extends Component {
         />
       }
       >
-      <Swiper
-        autoplay
-        autoplayTimeout={5}
-        showsPagination={false}
-        height={250}
-        loop
-      >
-        <View>
-          <Image
-            source={require('../images/bd.jpg')}
-            style={{ height: 250, width: 500 }}
-          />
-          <LinearGradient
-            colors={['rgba(0, 0, 0, 0.2)', 'rgba(0,0,0, 0.2)', 'rgba(0,0,0, 0.7)']}
-            style={styles.linearGradient}
-          />
-        </View>
-        <View>
-          <Image
-            source={require('../images/bd.jpg')}
-            style={{ height: 250, width: 500 }}
-          />
-          <LinearGradient
-            colors={['rgba(0, 0, 0, 0.2)', 'rgba(0,0,0, 0.2)', 'rgba(0,0,0, 0.7)']}
-            style={styles.linearGradient}
-          />
-        </View>
-        <View>
-          <Image
-            source={require('../images/bd.jpg')}
-            style={{ height: 250, width: 500 }}
-          />
-          <LinearGradient
-            colors={['rgba(0, 0, 0, 0.2)', 'rgba(0,0,0, 0.2)', 'rgba(0,0,0, 0.7)']}
-            style={styles.linearGradient}
-          />
-        </View>
-      </Swiper>
-        <View style={styles.card}>
-          <Image
-            source={require('../images/main1.jpg')}
-            style={{ width: 135, height: 200, borderRadius: 3 }}
-          />
-          <View style={styles.cardInfo}>
-            <Text
-              style={{ color: 'white', fontWeight: '500', fontSize: 19 }}
+    
+        <Swiper
+          autoplay
+          autoplayTimeout={5}
+          showsPagination={false}
+          height={250}
+          loop
+        >
+          <View>
+            <Image
+              source={require('../images/bd.jpg')}
+              style={{ height: 250, width: 500 }}
+            />
+            <LinearGradient
+              colors={['rgba(0, 0, 0, 0.2)', 'rgba(0,0,0, 0.2)', 'rgba(0,0,0, 0.7)']}
+              style={styles.linearGradient}
+            />
+          </View>
+          <View>
+            <Image
+              source={require('../images/bd.jpg')}
+              style={{ height: 250, width: 500 }}
+            />
+            <LinearGradient
+              colors={['rgba(0, 0, 0, 0.2)', 'rgba(0,0,0, 0.2)', 'rgba(0,0,0, 0.7)']}
+              style={styles.linearGradient}
+            />
+          </View>
+          <View>
+            <Image
+              source={require('../images/bd.jpg')}
+              style={{ height: 250, width: 500 }}
+            />
+            <LinearGradient
+              colors={['rgba(0, 0, 0, 0.2)', 'rgba(0,0,0, 0.2)', 'rgba(0,0,0, 0.7)']}
+              style={styles.linearGradient}
+            />
+          </View>
+        </Swiper>
+          <View style={styles.card}>
+            <Image
+              source={require('../images/main1.jpg')}
+              style={{ width: 135, height: 200, borderRadius: 3 }}
+            />
+            <View style={styles.cardInfo}>
+              <Text
+                style={{ color: 'white', fontWeight: '500', fontSize: 19 }}
 
-            >Beauty and the Beast</Text>
-            <Text style={{ color: 'white', fontSize: 15 }}>Be our guest</Text>
-            <View style={styles.genreContainer}>
-              <Text style={styles.genreText}>Fantasy</Text>
-              <Text style={styles.genreText}>Music</Text>
-              <Text style={styles.genreText}>Romance</Text>
-            </View>
-            <View style={styles.genreContainer}>
-              <Icon name="md-star" size={16} color="#F5B642" />
-              <Text style={{ color: 'white', paddingLeft: 5 }}>8.9</Text>
+              >Beauty and the Beast</Text>
+              <Text style={{ color: 'white', fontSize: 15 }}>Be our guest</Text>
+              <View style={styles.genreContainer}>
+                <Text style={styles.genreText}>Fantasy</Text>
+                <Text style={styles.genreText}>Music</Text>
+                <Text style={styles.genreText}>Romance</Text>
+              </View>
+              <View style={styles.genreContainer}>
+                <Icon name="md-star" size={16} color="#F5B642" />
+                <Text style={{ color: 'white', paddingLeft: 5 }}>8.9</Text>
+              </View>
             </View>
           </View>
-        </View>
-        <View style={{ marginTop: 150 }}>
-          <ScrollableTabView
+          <View style={{ marginTop: 150, flex: 1 }}>
+            <ScrollableTabView
 
-          onChangeTab={() => console.log('tab changed')}
-          renderTabBar={() => (
-            <DefaultTabBar
-              textStyle={styles.textStyle}
-              underlineStyle={styles.underlineStyle}
-              style={styles.tabBar}
-            />
-          )}
-          >
-            <Info tabLabel='INFO' />
-            <ScrollView tabLabel='CASTS'>
-              <Text style={{ color: '#fff' }}>ifrfsrff</Text>
-              <Icon name='logo-apple' color='white' size={300} style={styles.icon} />
-              <Icon name='ios-phone-portrait' color='white' size={300} style={styles.icon} />
-              <Icon name='logo-apple' color='#DBDDDE' size={300} style={styles.icon} />
-              <Icon name='ios-phone-portrait' color='#DBDDDE' size={300} style={styles.icon} />
-            </ScrollView>
-            <ScrollView tabLabel='TRAILERS'>
-              <Icon name='logo-android' color='#A4C639' size={300} style={styles.icon} />
-              <Icon name='logo-android' color='white' size={300} style={styles.icon} />
-              <Icon name='logo-android' color='white' size={300} style={styles.icon} />
-            </ScrollView>
-          </ScrollableTabView>
-        </View>
-        <ScrollableTabView>
-          <Text tabLabel='Tab #1' style={{ color: 'white', position: 'absolute', top: 50 }}>My</Text>
-          <Text tabLabel='Tab #2' style={{ color: 'white' }}>favorite</Text>
-          <Text tabLabel='Tab #3' style={{ color: 'white' }}>project</Text>
-        </ScrollableTabView>
+            onChangeTab={() => console.log('tab changed')}
+            renderTabBar={() => (
+              <DefaultTabBar
+                textStyle={styles.textStyle}
+                underlineStyle={styles.underlineStyle}
+                style={styles.tabBar}
+              />
+            )}
+            >
+              <Info tabLabel='INFO' />
+              <Cast tabLabel='CASTS' />
+              <Trailers tabLabel='TRAILERS' />
+            </ScrollableTabView>
+          </View>
 
       </ScrollView>
-
     );
   }
 }
