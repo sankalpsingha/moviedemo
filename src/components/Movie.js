@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { ScrollView, Text, View, RefreshControl, Image } from 'react-native';
+import { ScrollView, Text, View, RefreshControl, Image, Dimensions } from 'react-native';
 import Swiper from 'react-native-swiper';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -13,38 +13,55 @@ class Movie extends Component {
 
   constructor(props) {
 		super(props);
-
 		this.state = {
 			castsTabHeight: null,
-			heightAnim: null,
+			// heightAnim: null,
 			infoTabHeight: null,
 			trailersTabHeight: null,
 			tab: 0,
 		};
-}
-_getTabHeight(tabName, height) {
-  if (tabName === 'casts') this.setState({ castsTabHeight: height });
-  if (tabName === 'trailers') this.setState({ trailersTabHeight: height });
-}
+  }
+
+  _onChangeTab({ i }) {
+		this.setState({ tab: i });
+    console.log('Tab index: ', i);
+    // console.log('Ref: ', ref);
+	}
+
+  // ScrollView onContentSizeChange prop
+	_onContentSizeChange(width, height) {
+		if (this.state.tab === 0 && this.state.infoTabHeight === this.state.castsTabHeight) {
+			this.setState({ infoTabHeight: height });
+		}
+    console.log('Height: ', height);
+	}
 
   render() {
+    let height;
+		if (this.state.tab === 0) height = this.state.infoTabHeight;
+		if (this.state.tab === 1) height = this.state.castsTabHeight;
+		if (this.state.tab === 2) height = this.state.trailersTabHeight;
+    console.log('Height Applied:', height);
+
     return (
     <ScrollView
       style={{ backgroundColor: 'black' }}
-      contentContainerStyle={{ flex: 1 }}
-      refreshControl={
-        <RefreshControl
-          refreshing={false}
-          onRefresh={() => { console.log('refreshed'); }}
-          colors={['#EA0000']}
-          tintColor="white"
-          title="loading..."
-          titleColor="white"
-          progressBackgroundColor="white"
-        />
-      }
-      >
-    
+      // contentContainerStyle={{ flex: 1 }}
+      onContentSizeChange={this._onContentSizeChange.bind(this)}
+      // refreshControl={
+      //   <RefreshControl
+      //     refreshing={false}
+      //     onRefresh={() => { console.log('refreshed'); }}
+      //     colors={['#EA0000']}
+      //     tintColor="white"
+      //     title="loading..."
+      //     titleColor="white"
+      //     progressBackgroundColor="white"
+      //   />
+      // }
+    >
+
+      <View style={{ height }}>
         <Swiper
           autoplay
           autoplayTimeout={5}
@@ -108,7 +125,7 @@ _getTabHeight(tabName, height) {
           <View style={{ marginTop: 150, flex: 1 }}>
             <ScrollableTabView
 
-            onChangeTab={() => console.log('tab changed')}
+            onChangeTab={this._onChangeTab.bind(this)}
             renderTabBar={() => (
               <DefaultTabBar
                 textStyle={styles.textStyle}
@@ -122,7 +139,7 @@ _getTabHeight(tabName, height) {
               <Trailers tabLabel='TRAILERS' />
             </ScrollableTabView>
           </View>
-
+        </View>
       </ScrollView>
     );
   }

@@ -12,6 +12,27 @@ const Info = () => {
         enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
         ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehen
       </Text>
+
+      <Text style={{ color: 'white', fontSize: 14 }}>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+        do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+        ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehen
+      </Text>
+
+      <Text style={{ color: 'white', fontSize: 14 }}>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+        do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+        ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehen
+      </Text>
+
+      <Text style={{ color: 'white', fontSize: 14 }}>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+        do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+        enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi
+        ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehen
+      </Text>
       </View>
       <View style={styles.labelContainer}>
         <Text style={styles.label}>Release Date</Text>
